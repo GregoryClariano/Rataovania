@@ -1,16 +1,9 @@
-import pygame
-from game.core.game_manage import GameManage
+from core.game_manage import Game
 
 
 def main():
-
-    pygame.init()
-
-    game = GameManage()
-
+    game = Game()
     game.run()
-
-    pygame.quit()
 
 
 if __name__ == "__main__":
