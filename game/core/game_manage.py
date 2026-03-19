@@ -9,7 +9,7 @@ class Game:
 
         pygame.init()
 
-        self.screen = pygame.display.set_mode((800, 600))
+        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         pygame.display.set_caption("Metroidvania TCC")
 
         self.clock = pygame.time.Clock()
@@ -18,7 +18,7 @@ class Game:
         self.player = Player(100, 300)
 
         # chão simples (x, y, largura, altura)
-        self.ground = pygame.Rect(0, 500, 800, 100)
+        self.ground = pygame.Rect(0, 500, 3000, 100)
 
     def run(self):
 
