@@ -1,6 +1,7 @@
 import pygame
 
-from gameObject.player import Player
+from game_world import GameWorld
+
 
 
 class Game:
@@ -14,11 +15,8 @@ class Game:
 
         self.clock = pygame.time.Clock()
         self.running = True
-
-        self.player = Player(100, 300)
-
-        # chão simples (x, y, largura, altura)
-        self.ground = pygame.Rect(0, 500, 3000, 100)
+        
+        self.world = GameWorld()
 
     def run(self):
 
@@ -27,7 +25,8 @@ class Game:
             dt = self.clock.tick(60) / 1000
 
             self.handle_events()
-            self.update(dt)
+            keys = pygame.key.get_pressed()
+            self.world.update(dt, keys)
             self.render()
 
         pygame.quit()
@@ -38,16 +37,10 @@ class Game:
             if event.type == pygame.QUIT:
                 self.running = False
 
-    def update(self, dt):
-
-        keys = pygame.key.get_pressed()
-        self.player.update(dt, keys, self.ground)
-
     def render(self):
 
         self.screen.fill((30, 30, 30))
 
-        pygame.draw.rect(self.screen, (100, 255, 100), self.ground)
-        self.player.draw(self.screen)
+        self.world.render(self.screen)
 
         pygame.display.flip()

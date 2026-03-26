@@ -1,6 +1,5 @@
 from core.game_manage import Game
 
-
 def main():
     game = Game()
     game.run()

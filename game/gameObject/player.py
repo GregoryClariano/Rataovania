@@ -11,6 +11,7 @@ class Player:
 
         self.speed = 300
         self.jump_force = -500
+        self.remaining_jumps = 1
 
         self.on_ground = False
 
@@ -21,18 +22,19 @@ class Player:
         moving = False
         self.rb.acceleration[0] = 0
 
-        if keys[pygame.K_a]:
+        if keys[pygame.K_LEFT]:
             self.rb.acceleration[0] = -1000
             moving = True
 
-        if keys[pygame.K_d]:
+        if keys[pygame.K_RIGHT]:
             self.rb.acceleration[0] = 1000
             moving = True
 
         # PULO
-        if keys[pygame.K_SPACE] and self.on_ground:
+        if keys[pygame.K_SPACE] and (self.on_ground or (self.remaining_jumps > 0)):
             self.rb.velocity[1] = self.jump_force
             self.on_ground = False
+            self.remaining_jumps -= 1
 
         # GRAVIDADE
         self.rb.apply_gravity()
