@@ -1,6 +1,6 @@
 import pygame
 
-from game_world import GameWorld
+from core.game_world import GameWorld
 
 
 

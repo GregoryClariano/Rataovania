@@ -16,9 +16,10 @@ class Player:
         self.on_ground = False
 
         self.rb = Rigidbody()
+        
+        self.jump_pressed_last_frame = False
 
-    def update(self, dt, keys, ground):
-        # INPUT
+    def update(self, dt, keys, platforms):
         moving = False
         self.rb.acceleration[0] = 0
 
@@ -30,32 +31,54 @@ class Player:
             self.rb.acceleration[0] = 1000
             moving = True
 
-        # PULO
-        if keys[pygame.K_SPACE] and (self.on_ground or (self.remaining_jumps > 0)):
-            self.rb.velocity[1] = self.jump_force
-            self.on_ground = False
-            self.remaining_jumps -= 1
+        jump_pressed = keys[pygame.K_SPACE]
 
-        # GRAVIDADE
+        if jump_pressed and not self.jump_pressed_last_frame:
+            if self.on_ground or self.remaining_jumps > 0:
+                self.rb.velocity[1] = self.jump_force
+                self.on_ground = False
+                self.remaining_jumps -= 1
+
+        self.jump_pressed_last_frame = jump_pressed
+
         self.rb.apply_gravity()
 
-        # ATRITO (se não estiver apertando nada)
         if not moving:
             self.rb.apply_friction(dt)
 
-        # ATUALIZA FÍSICA
         self.rb.update(dt)
 
         # MOVIMENTO
         self.rect.x += int(self.rb.velocity[0] * dt)
+
+        for platform in platforms:
+            if self.rect.colliderect(platform):
+
+                if self.rb.velocity[0] > 0:
+                    self.rect.right = platform.left
+
+                elif self.rb.velocity[0] < 0:
+                    self.rect.left = platform.right
+
+                self.rb.velocity[0] = 0
+            
         self.rect.y += int(self.rb.velocity[1] * dt)
 
-        # COLISÃO
-        if self.rect.colliderect(ground):
+        self.on_ground = False  # reset
 
-            self.rect.bottom = ground.top
-            self.rb.velocity[1] = 0
-            self.on_ground = True
+        for platform in platforms:
+            if self.rect.colliderect(platform):
+
+                if self.rb.velocity[1] > 0:  # caindo
+                    self.rect.bottom = platform.top
+                    self.on_ground = True
+
+                    self.remaining_jumps = 1
+                    
+                elif self.rb.velocity[1] < 0:  # subindo
+                    self.rect.top = platform.bottom
+
+                self.rb.velocity[1] = 0
 
     def draw(self, screen):
 

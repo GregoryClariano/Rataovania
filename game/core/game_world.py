@@ -1,7 +1,7 @@
 # pylint: disable=import-error
 import pygame
 
-from player import Player
+from gameObject.player import Player
 
 
 class GameWorld:
@@ -12,16 +12,20 @@ class GameWorld:
 
         self.entities = [self.player]
 
-        self.ground = pygame.Rect(0, 500, 800, 100)
+        self.platforms = [
+            pygame.Rect(0, 500, 800, 100),   # chão
+            pygame.Rect(300, 400, 200, 20),  # plataforma 1
+            pygame.Rect(100, 300, 150, 20),  # plataforma 2
+        ]
 
     def update(self, dt, keys):
 
         for entity in self.entities:
-            entity.update(dt, keys, self.ground)
+            entity.update(dt, keys, self.platforms)
 
     def render(self, screen):
 
-        pygame.draw.rect(screen, (100, 255, 100), self.ground)
+        for platform in self.platforms:
+            pygame.draw.rect(screen, (100, 255, 100), platform)
 
-        for entity in self.entities:
-            entity.draw(screen)
+        self.player.draw(screen)
