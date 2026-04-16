@@ -13,9 +13,9 @@ class GameWorld:
         self.entities = [self.player]
 
         self.platforms = [
-            pygame.Rect(0, 500, 800, 100),   # chão
-            pygame.Rect(300, 400, 200, 20),  # plataforma 1
-            pygame.Rect(100, 300, 150, 20),  # plataforma 2
+            pygame.Rect(0, 500, 1920, 100),  
+            pygame.Rect(300, 400, 200, 20),  
+            pygame.Rect(100, 300, 150, 20),  
         ]
 
     def update(self, dt, keys):

@@ -64,18 +64,18 @@ class Player:
             
         self.rect.y += int(self.rb.velocity[1] * dt)
 
-        self.on_ground = False  # reset
+        self.on_ground = False  
 
         for platform in platforms:
             if self.rect.colliderect(platform):
 
-                if self.rb.velocity[1] > 0:  # caindo
+                if self.rb.velocity[1] > 0:  
                     self.rect.bottom = platform.top
                     self.on_ground = True
 
                     self.remaining_jumps = 1
                     
-                elif self.rb.velocity[1] < 0:  # subindo
+                elif self.rb.velocity[1] < 0:  
                     self.rect.top = platform.bottom
 
                 self.rb.velocity[1] = 0
