@@ -7,4 +7,4 @@ class DynamicObject:
         pass
     
     def draw(self, screen):
-        screen.blit(self.sprite, self.possition)adsfas
+        screen.blit(self.sprite, self.possition)
