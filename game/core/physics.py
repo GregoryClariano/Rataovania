@@ -7,10 +7,10 @@ class Rigidbody:
 
         self.gravity = 900
 
-        # NOVO
-        self.friction = 800  # força de desaceleração
+    
+        self.friction = 800 
 
-        self.max_speed = 300  # limite horizontal
+        self.max_speed = 300
 
     def apply_gravity(self):
         self.acceleration[1] = self.gravity
@@ -37,12 +37,9 @@ class Rigidbody:
 
     def update(self, dt):
 
-        # v = v + a * dt
         self.velocity[0] += self.acceleration[0] * dt
         self.velocity[1] += self.acceleration[1] * dt
 
-        # LIMITAR velocidade
         self.clamp_velocity()
 
-        # reset aceleração
         self.acceleration = [0, 0]

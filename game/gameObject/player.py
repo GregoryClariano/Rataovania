@@ -3,9 +3,11 @@ import pygame
 
 from core.physics import Rigidbody
 
-class Player:
+class Player(Character):
 
     def __init__(self, x, y):
+
+        super().__init__(pygame.Vector2(x, y), None)
 
         self.rect = pygame.Rect(x, y, 50, 50)
 
@@ -17,7 +19,6 @@ class Player:
 
         self.rb = Rigidbody()
         
-        self.jump_pressed_last_frame = False
 
     def update(self, dt, keys, platforms):
         moving = False
@@ -31,15 +32,12 @@ class Player:
             self.rb.acceleration[0] = 1000
             moving = True
 
-        jump_pressed = keys[pygame.K_SPACE]
-
-        if jump_pressed and not self.jump_pressed_last_frame:
-            if self.on_ground or self.remaining_jumps > 0:
+        if keys[pygame.K_SPACE]:
+            if  self.remaining_jumps > 0 and self.on_ground:
                 self.rb.velocity[1] = self.jump_force
                 self.on_ground = False
                 self.remaining_jumps -= 1
-
-        self.jump_pressed_last_frame = jump_pressed
+                    
 
         self.rb.apply_gravity()
 
@@ -48,7 +46,6 @@ class Player:
 
         self.rb.update(dt)
 
-        # MOVIMENTO
         self.rect.x += int(self.rb.velocity[0] * dt)
 
         for platform in platforms:
