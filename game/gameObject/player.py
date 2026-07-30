@@ -1,6 +1,7 @@
 # pylint: disable=import-error
 import pygame
 
+from gameObject.character import Character
 from core.physics import Rigidbody
 
 class Player(Character):

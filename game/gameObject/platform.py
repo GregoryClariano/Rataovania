@@ -1,6 +1,6 @@
 import pygame
 
-from core.physics import Rigidbody
+from static_objects import StaticObject
 
 class Platform(StaticObject):
     def __init__(self, rect):

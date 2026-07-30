@@ -1,4 +1,5 @@
 # pylint: disable=import-error
+from platform import platform
 import pygame
 
 from gameObject.player import Player
@@ -15,7 +16,7 @@ class GameWorld:
     def update(self, dt, keys):
 
         for entity in self.entities:
-            entity.update(dt, keys, platforms)
+            entity.update(dt, keys, platform)
 
     def render(self, screen):
         self.player.draw(screen)
