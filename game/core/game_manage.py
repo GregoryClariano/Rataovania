@@ -2,8 +2,6 @@ import pygame
 
 from core.game_world import GameWorld
 
-
-
 class Game:
 
     def __init__(self):

@@ -1,5 +1,6 @@
 {
     "python.analysis.extraPaths": [
-        "./game/gameObject"
+        "./game/gameObject",
+        "./game/core"
     ]
 }

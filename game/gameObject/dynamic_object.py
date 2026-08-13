@@ -1,3 +1,5 @@
+import pygame
+
 class DynamicObject:
     def __init__(self, possition, sprite):
         self.possition = pygame.Vector2(possition)
