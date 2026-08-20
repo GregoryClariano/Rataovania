@@ -49,14 +49,16 @@ class Player(Character):
 
         self.rect.x += int(self.rb.velocity[0] * dt)
 
+
         for platform in platforms:
-            if self.rect.colliderect(platform):
+
+            if self.rect.colliderect(platform.hitbox):
 
                 if self.rb.velocity[0] > 0:
-                    self.rect.right = platform.left
+                    self.rect.right = platform.hitbox.left
 
                 elif self.rb.velocity[0] < 0:
-                    self.rect.left = platform.right
+                    self.rect.left = platform.hitbox.right
 
                 self.rb.velocity[0] = 0
             
@@ -64,17 +66,21 @@ class Player(Character):
 
         self.on_ground = False  
 
+
         for platform in platforms:
-            if self.rect.colliderect(platform):
 
-                if self.rb.velocity[1] > 0:  
-                    self.rect.bottom = platform.top
+            if self.rect.colliderect(platform.hitbox):
+
+                if self.rb.velocity[1] > 0:
+
+                    self.rect.bottom = platform.hitbox.top
+
                     self.on_ground = True
-
                     self.remaining_jumps = 1
-                    
-                elif self.rb.velocity[1] < 0:  
-                    self.rect.top = platform.bottom
+
+                elif self.rb.velocity[1] < 0:
+
+                    self.rect.top = platform.hitbox.bottom
 
                 self.rb.velocity[1] = 0
 
