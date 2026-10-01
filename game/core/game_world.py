@@ -2,6 +2,7 @@ import pygame
 
 from gameObject.player import Player
 from gameObject.platform import Platform
+from tilemap import TileMap
 
 
 class GameWorld:
@@ -10,6 +11,8 @@ class GameWorld:
 
         self.player = Player(100, 300)
 
+        self.tile_map = TileMap()
+        
         platform_sprite = pygame.image.load("sprites/platform.png").convert_alpha()
 
 
@@ -56,5 +59,7 @@ class GameWorld:
 
         for platform in self.platforms:
             platform.draw(screen)
+            
+        self.tile_map.draw(screen)
 
         self.player.draw(screen)
