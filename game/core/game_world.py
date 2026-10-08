@@ -2,7 +2,7 @@ import pygame
 
 from gameObject.player import Player
 from gameObject.platform import Platform
-from tilemap import TileMap
+from core.tilemap import TileMap
 
 
 class GameWorld:
@@ -53,7 +53,12 @@ class GameWorld:
     def update(self, dt, keys):
 
         for entity in self.entities:
-            entity.update(dt, keys, self.platforms)
+            entity.update(
+                dt,
+                keys,
+                self.platforms,
+                self.tile_map.tiles
+            )
 
     def render(self, screen):
 

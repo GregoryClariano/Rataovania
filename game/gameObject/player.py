@@ -21,7 +21,7 @@ class Player(Character):
         self.rb = Rigidbody()
         
 
-    def update(self, dt, keys, platforms):
+    def update(self, dt, keys, platforms, tiles):
         moving = False
         self.rb.acceleration[0] = 0
 
@@ -81,6 +81,28 @@ class Player(Character):
                 elif self.rb.velocity[1] < 0:
 
                     self.rect.top = platform.hitbox.bottom
+
+                self.rb.velocity[1] = 0
+                
+        for tile in tiles:
+            if self.rect.colliderect(tile.hitbox):
+
+                if self.rb.velocity[0] > 0:
+                    self.rect.right = tile.hitbox.left
+
+                elif self.rb.velocity[0] < 0:
+                    self.rect.left = tile.hitbox.right
+
+                self.rb.velocity[0] = 0
+        for tile in tiles:
+            if self.rect.colliderect(tile.hitbox):
+
+                if self.rb.velocity[1] > 0:
+                    self.rect.bottom = tile.hitbox.top
+                    self.on_ground = True
+
+                elif self.rb.velocity[1] < 0:
+                    self.rect.top = tile.hitbox.bottom
 
                 self.rb.velocity[1] = 0
 
