@@ -47,64 +47,43 @@ class Player(Character):
 
         self.rb.update(dt)
 
+
+        # Movimento horizontal
         self.rect.x += int(self.rb.velocity[0] * dt)
 
-
-        for platform in platforms:
-
-            if self.rect.colliderect(platform.hitbox):
-
-                if self.rb.velocity[0] > 0:
-                    self.rect.right = platform.hitbox.left
-
-                elif self.rb.velocity[0] < 0:
-                    self.rect.left = platform.hitbox.right
-
-                self.rb.velocity[0] = 0
-            
-        self.rect.y += int(self.rb.velocity[1] * dt)
-
-        self.on_ground = False  
-
-
-        for platform in platforms:
-
-            if self.rect.colliderect(platform.hitbox):
-
-                if self.rb.velocity[1] > 0:
-
-                    self.rect.bottom = platform.hitbox.top
-
-                    self.on_ground = True
-                    self.remaining_jumps = 1
-
-                elif self.rb.velocity[1] < 0:
-
-                    self.rect.top = platform.hitbox.bottom
-
-                self.rb.velocity[1] = 0
-                
         for tile in tiles:
-            if self.rect.colliderect(tile.hitbox):
+            if not tile.solid:
+                continue
 
+            if self.rect.colliderect(tile.hitbox):
                 if self.rb.velocity[0] > 0:
                     self.rect.right = tile.hitbox.left
-
                 elif self.rb.velocity[0] < 0:
                     self.rect.left = tile.hitbox.right
 
                 self.rb.velocity[0] = 0
-        for tile in tiles:
-            if self.rect.colliderect(tile.hitbox):
 
+
+        # Movimento vertical
+        self.rect.y += int(self.rb.velocity[1] * dt)
+
+        self.on_ground = False
+
+        for tile in tiles:
+            if not tile.solid:
+                continue
+
+            if self.rect.colliderect(tile.hitbox):
                 if self.rb.velocity[1] > 0:
                     self.rect.bottom = tile.hitbox.top
                     self.on_ground = True
+                    self.remaining_jumps = 1
 
                 elif self.rb.velocity[1] < 0:
                     self.rect.top = tile.hitbox.bottom
 
                 self.rb.velocity[1] = 0
+
 
     def draw(self, screen):
 
