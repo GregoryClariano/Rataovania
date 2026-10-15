@@ -1,8 +1,8 @@
 import pygame
 
 from gameObject.player import Player
-from gameObject.platform import Platform
 from core.tilemap import TileMap
+from core.camera import Camera
 
 
 class GameWorld:
@@ -10,42 +10,11 @@ class GameWorld:
     def __init__(self):
 
         self.player = Player(100, 300)
+        
+        self.camera = Camera(1280, 720)
 
         self.tile_map = TileMap()
         
-        platform_sprite = pygame.image.load("sprites/platform.png").convert_alpha()
-
-
-        self.platforms = [
-
-            Platform(
-                pygame.Vector2(0, 500),
-                platform_sprite,
-                pygame.Rect(0, 500, 800, 100)
-            ),
-
-            Platform(
-                pygame.Vector2(300, 400),
-                platform_sprite,
-                pygame.Rect(300, 400, 200, 20)
-            ),
-
-            Platform(
-                pygame.Vector2(100, 300),
-                platform_sprite,
-                pygame.Rect(100, 300, 150, 20)
-            ),
-
-            Platform(
-                pygame.Vector2(600, 350),
-                platform_sprite,
-                pygame.Rect(600, 350, 150, 20)
-            )
-        ]
-
-        for platform in self.platforms:
-            platform.update_hitbox()
-                
         self.entities = [
             self.player
         ]
@@ -56,15 +25,11 @@ class GameWorld:
             entity.update(
                 dt,
                 keys,
-                self.platforms,
                 self.tile_map.tiles
             )
+        self.camera.update(self.player)
 
     def render(self, screen):
-
-        for platform in self.platforms:
-            platform.draw(screen)
-            
-        self.tile_map.draw(screen)
-
+        self.tile_map.draw(screen, self.camera)
+        
         self.player.draw(screen)

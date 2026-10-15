@@ -21,7 +21,7 @@ class Player(Character):
         self.rb = Rigidbody()
         
 
-    def update(self, dt, keys, platforms, tiles):
+    def update(self, dt, keys, tiles):
         moving = False
         self.rb.acceleration[0] = 0
 
@@ -47,8 +47,6 @@ class Player(Character):
 
         self.rb.update(dt)
 
-
-        # Movimento horizontal
         self.rect.x += int(self.rb.velocity[0] * dt)
 
         for tile in tiles:
@@ -63,8 +61,6 @@ class Player(Character):
 
                 self.rb.velocity[0] = 0
 
-
-        # Movimento vertical
         self.rect.y += int(self.rb.velocity[1] * dt)
 
         self.on_ground = False

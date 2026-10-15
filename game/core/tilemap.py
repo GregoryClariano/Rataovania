@@ -63,6 +63,7 @@ class TileMap:
 
                     self.tiles.append(tile)
 
-    def draw(self, screen):
+    def draw(self, screen, camera):
         for tile in self.tiles:
-            tile.draw(screen)
+            screen_position = camera.apply(tile.position)
+            screen.blit(tile.sprite, screen_position)
